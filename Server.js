@@ -6,7 +6,7 @@ const {User_Model} = require('./Models/Users')
 const {Admin_Model} = require('./Models/Admins')
 const {Driver_Model} = require('./Models/Driver')
 const {Delivery_Model} = require('./Models/Deliveries')
-const {gql,ApolloServer}  = require('apollo-server-express')
+const {gql,ApolloServer,makeExecutableSchema}  = require('apollo-server-express')
 
 //Salt Generation...
 const Salt = brc.genSalt(10)
@@ -200,14 +200,12 @@ Mutation:{
     },
 }}
 
-const server = new ApolloServer({
+const schema = makeExecutableSchema({
     typeDefs:Schema,
-    resolvers:root,
-    playground:true,
-    engine:{
-        reportSchema:true
-    }
+    resolvers:root
 })
+
+const server = new ApolloServer({schema,playground:true})
 
 
 server.applyMiddleware({app,bodyParserConfig:true})
