@@ -205,7 +205,7 @@ const schema = makeExecutableSchema({
     resolvers:root
 })
 
-const server = new ApolloServer({schema,playground:true})
+const server = new ApolloServer({schema,playground:true,introspection:true})
 
 
 server.applyMiddleware({app,bodyParserConfig:true})
