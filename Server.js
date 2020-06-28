@@ -29,6 +29,7 @@ type Query{
     Available_Delivery:[Deliveries]
     Customer_Records(username:String!):[Deliveries]
     Driver_Records(username:String):[Deliveries]
+    Completed_Deliveries(username:String!):[Deliveries]
 }
 
 type User{
@@ -164,6 +165,11 @@ const root = {
         if(doc) return doc
         return err
     }),
+
+    Completed_Deliveries:(parent,{username})=>Delivery_Model.find({Username:username,Completed:true},(err,doc)=>{
+        if(doc) return doc
+        return err
+    })
 },
 
 
