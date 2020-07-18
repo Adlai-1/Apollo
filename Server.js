@@ -27,9 +27,10 @@ type Query{
     Available_Drivers:[Driver]
     Find_Delivery(username:String!): [Deliveries]
     Available_Delivery:[Deliveries]
-    Customer_Records(username:String!):[Deliveries]
+    Customer_Delivery(username:String!):[Deliveries]
     Driver_Records(username:String):[Deliveries]
     Completed_Deliveries(username:String!):[Deliveries]
+    Driver_Delivery(driver:String!):[Deliveries]
 }
 
 type User{
@@ -156,12 +157,17 @@ const root = {
         return err
     }),
 
-    Customer_Records:(parent,{username})=> Delivery_Model.find({Username:username},(err,doc)=>{
+    Customer_Delivery:(parent,{username})=> Delivery_Model.find({Username:username,Completed:false},(err,doc)=>{
         if(doc) return doc
         return err
     }),
 
-    Driver_Records:(parent,{username})=> Delivery_Model.find({Driver:username},(err,doc)=>{
+    Driver_Delivery:(parent,{driver})=> Delivery_Model.find({Driver:driver,Completed:false},(err,doc)=>{
+        if(doc) return doc
+        return err
+    }),
+
+    Driver_Records:(parent,{username})=> Delivery_Model.find({Driver:username,Completed:true},(err,doc)=>{
         if(doc) return doc
         return err
     }),
