@@ -237,7 +237,7 @@ app.post('/Admin-Signup',(req,res)=>{
                     })
                     file.save((err,docs)=>{
                         if(docs) return res.sendStatus(200)
-                        return err
+                        else{console.log(err)}
                     })
                 }
                 else return err
@@ -256,11 +256,12 @@ app.post('/Driver-Signup',(req,res)=>{
                     const file = new Driver_Model({
                         Name : req.body.Name,
                         Username : req.body.Username,
-                        Password : hash
+                        Password : hash,
+                        Contact : req.body.Contact
                     })
                     file.save((err,docs)=>{
                         if(docs) return res.sendStatus(200)
-                        return err
+                        else{console.log(err)}
                     })
                 }
                 else return err
@@ -277,17 +278,15 @@ app.post('/User-Signup',(req,res)=>{
             brc.hash(req.body.Password,salt,(err,hash)=>{
                 const file = new User_Model({
                     Name : req.body.Name,
-                    Email_Address : req.body.Email_Address,
+                    Email: req.body.Email,
                     Contact : req.body.Contact,
                     Username : req.body.Username,
                     Password : hash,
                     Address : req.body.Address,
-                    City : req.body.City,
-                    Region : req.body.Region
                 })
                 file.save((err,docs)=>{
                     if(docs) return res.sendStatus(200)
-                    return err
+                    else{console.log(err)}
                 })
             })
         }
