@@ -89,7 +89,7 @@ type Mutation{
 
    Pickedup(status:Boolean!,_id:ID!): Deliveries
 
-   Moved(status:Boolean!,_id:ID!): Driver
+   Moved(Driver:String!,status:Boolean!): Driver
     
     Delivery_Request(
         Parcel_Type:String!
@@ -201,7 +201,7 @@ Mutation:{
         else return err
     }),
 
-    Moved:(parent,{_id,status})=>Driver_Model.findByIdAndUpdate({_id:_id},{$set:{On_Delivery:status}},(err,doc)=>{
+    Moved:(parent,{Driver,status})=>Driver_Model.findOneAndUpdate({Username:Driver},{$set:{On_Delivery:status}},(err,doc)=>{
         if(doc) return doc
         else return err
     }),
